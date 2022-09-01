@@ -9,10 +9,11 @@ class Author extends Model
 {
     use HasFactory;
 
+
     protected $guarded = [];
 
-    public function book()
+    public function books()
     {
-        return $this->belongsTo(Author::class, 'book_id', 'id');
+        return $this->belongsToMany(Book::class);
     }
 }

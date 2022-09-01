@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('authors', function (Blueprint $table) {
+        Schema::create('author_book', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->unsignedBigInteger('book_id')->nullable();
+            $table->foreignId('author_id')->constrained();
+            $table->foreignId('book_id')->constrained();
             $table->timestamps();
+            $table->engine = 'InnoDB';
 
-            $table->index('book_id', 'author_book_idx');
-            $table->foreign('book_id', 'author_book_fk')->on('books')->references('id');
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('authors');
+        Schema::dropIfExists('author_book');
     }
 };
