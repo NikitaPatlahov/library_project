@@ -10,18 +10,26 @@
 <body>
 <form action="{{route('book.store')}}" method="post">
     @csrf
+    @error('title')
+    <div>{{ $message }}</div>
+    @enderror
     <label for="title">Название</label>
     <input type="text" name="title" id="title" value=""><br>
+    @error('year')
+    <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
     <label for="year">Год издания</label>
     <input type="text" name="year" id="year" value=" "><br>
     <label for="author">Авторы</label>
     <select multiple name="authors[]" id="author"><br>
         @foreach($authors as $author)
-        <option value="{{$author->id}}">{{ $author->name }}</option>
+            <option value="{{$author->id}}">{{ $author->name }}</option>
         @endforeach
     </select><br>
     <button type="submit">Добавить</button>
 </form>
-<a href="{{route('book.index')}}"><button>Назад</button></a>
+<a href="{{route('book.index')}}">
+    <button>Назад</button>
+</a>
 </body>
 </html>

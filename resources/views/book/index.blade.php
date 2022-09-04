@@ -8,14 +8,20 @@
     <title>Document</title>
 </head>
 <body>
-<form action="">
-    <select name="" id="">
+
+<form action="{{ route('book.filter') }}" method="get">
+    <select name="author" id="author">
         @foreach($authors as $author)
-            <option value=""> {{$author->name}}</option>
+            <option {{ $author->name === request()->author ? ' selected' : '' }} value="{{$author->name}}"> {{$author->name}}</option>
         @endforeach
     </select>
+    <br><input type="submit" value="Применить">
 </form>
+<a href="{{route('book.index')}}"><button>Сбросить</button></a>
 
+@if(session('success'))
+    <h3>{{session('success')}}</h3>
+@endif
 <table>
     <tr>
         <th>ID</th>

@@ -8,25 +8,36 @@
     <title>Document</title>
 </head>
 <body>
-<form action="">
-    <select  name="" id="">
-        <option value=""></option>
-    </select>
-</form>
-
+@if(session('success'))
+   <h3>{{session('success')}}</h3>
+@endif
 <table>
     <tr>
         <th>ID</th>
-        <th>Название</th>
-        <th>Автор(ы)</th>
-        <th>Год издания</th>
+        <th>ФИО</th>
+        <th>Количество книг</th>
     </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+    @foreach($authors as $author)
+        <tr>
+            <td> {{ $author->id }}</td>
+            <td>{{ $author->name }}</td>
+            <td>{{ $author->books->count('title') }}</td>
+            <td><a href="{{ route('author.edit', $author->id) }}">
+                    <button>Редактировать</button>
+                </a></td>
+            <form action="{{route('author.destroy', $author->id)}}" method="post">
+                @method('delete')
+                @csrf
+                <td><a href="">
+                        <button>Удалить</button>
+                    </a></td>
+            </form>
+        </tr>
+
+    @endforeach
 </table>
+<a href="{{route('author.create')}}">
+    <button>Добавить</button>
+</a>
 </body>
 </html>

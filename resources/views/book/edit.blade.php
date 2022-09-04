@@ -11,18 +11,30 @@
 <form action="{{ route('book.update', $book->id) }}" method="post">
     @csrf
     @method('patch')
+    @error('title')
+    <div>{{ $message }}</div>
+    @enderror
     <label for="title">Название</label>
     <input type="text" name="title" id="title" value="{{$book->title}}"><br>
+    @error('year')
+    <div>{{ $message }}</div>
+    @enderror
     <label for="year">Год издания</label>
     <input type="text" name="year" id="year" value="{{$book->year}}"><br>
     <label for="author">Авторы</label>
     <select multiple name="authors[]" id="author"><br>
         @foreach($authors as $author)
-        <option value="{{$author->id}}">{{ $author->name }}</option>
+            <option
+                @foreach($book->authors as $bookAuthor)
+                    {{ $author->id === $bookAuthor->id ? ' selected' : '' }}
+                @endforeach
+                value="{{$author->id}}">{{ $author->name }}</option>
         @endforeach
     </select><br>
     <button type="submit">Сохранить</button>
 </form>
-<a href="{{route('book.index')}}"><button>Назад</button></a>
+<a href="{{route('book.index')}}">
+    <button>Назад</button>
+</a>
 </body>
 </html>

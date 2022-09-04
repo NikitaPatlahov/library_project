@@ -8,14 +8,15 @@
     <title>Document</title>
 </head>
 <body>
-<form action="{{route('author.store')}}" method="post">
+<form action="{{route('author.update', $author->id)}}" method="post">
+    @method('patch')
     @csrf
     @error('name')
     <div>{{ $message }}</div>
     @enderror
     <lable for="name">ФИО</lable>
-    <input id="name" name="name" value="" type="text"><br>
-    <input type="submit" value="Добавить">
+    <input id="name" name="name" value="{{ $author->name }}" type="text"><br>
+    <input type="submit" value="Сохранить">
 </form>
 </body>
 </html>
